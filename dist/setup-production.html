@@ -10,7 +10,7 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible">
 <![endif]-->
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Asciidoctor 2.0.10" name="generator">
+<meta content="Asciidoctor 2.0.12" name="generator">
 <title>Install Taiga in Production</title>
 <style>/* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment @import statement to use as custom stylesheet */
@@ -51,7 +51,7 @@ textarea{overflow:auto;vertical-align:top}
 table{border-collapse:collapse;border-spacing:0}
 *,*::before,*::after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
 html,body{font-size:100%}
-body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
@@ -66,10 +66,8 @@ img{-ms-interpolation-mode:bicubic}
 img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
-.center{margin-left:auto;margin-right:auto}
-.stretch{width:100%}
 .subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
-div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
 a{color:#2156a5;text-decoration:underline;line-height:inherit}
 a:hover,a:focus{color:#1d4b8f}
 a img{border:0}
@@ -109,19 +107,22 @@ h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
 h4{font-size:1.4375em}}
-table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede;word-wrap:normal}
 table thead,table tfoot{background:#f7f8f7}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt{background:#f8f8f7}
-table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
 .clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
 .clearfix::after,.float-group::after{clear:both}
-:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
-:not(pre)>code.nobreak{word-wrap:normal}
-:not(pre)>code.nowrap{white-space:nowrap}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
 pre>code{display:block}
@@ -186,7 +187,7 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
-#footer{max-width:100%;background:rgba(0,0,0,.8);padding:1.25em}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
 #footer-text{color:rgba(255,255,255,.8);line-height:1.44}
 #content{margin-bottom:.625em}
 .sect1{padding-bottom:.625em}
@@ -209,7 +210,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .admonitionblock>table td.icon{text-align:center;width:80px}
 .admonitionblock>table td.icon img{max-width:none}
 .admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
-.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
 .exampleblock>.content>:first-child{margin-top:0}
@@ -219,7 +220,7 @@ table.tableblock #preamble>.sectionbody>[class="paragraph"]:first-of-type p{font
 .sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
 .exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
-.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;overflow-x:auto;padding:1em;font-size:.8125em}
+.literalblock pre,.listingblock>.content>pre{-webkit-border-radius:4px;border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
 .literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class="highlight"],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
@@ -265,21 +266,20 @@ pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
 .quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
 .quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;text-align:left;margin-right:0}
-table.tableblock{max-width:100%;border-collapse:separate}
 p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
 td.tableblock>.content>:last-child{margin-bottom:-1.25em}
-td.tableblock>.content>:last-child.sidebarblock{margin-bottom:0}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
-table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
-table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
-table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
-table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
-table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
-table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
-table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
 table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
 table.frame-sides{border-width:0 1px}
-table.frame-topbot,table.frame-ends{border-width:1px 0}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
 table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
 th.halign-left,td.halign-left{text-align:left}
 th.halign-right,td.halign-right{text-align:right}
@@ -288,7 +288,7 @@ th.valign-top,td.valign-top{vertical-align:top}
 th.valign-bottom,td.valign-bottom{vertical-align:bottom}
 th.valign-middle,td.valign-middle{vertical-align:middle}
 table thead th,table tfoot th{font-weight:bold}
-tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th{background:#f7f8f7}
 tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
 p.tableblock>code:only-child{background:none;padding:0}
 p.tableblock{font-size:1em}
@@ -317,6 +317,7 @@ ol.lowergreek{list-style-type:lower-greek}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
 .colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
 .colist td:not([class]):first-child img{max-width:none}
@@ -389,7 +390,7 @@ a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
 .admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
-.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
 .conum[data-value] *{color:#fff!important}
 .conum[data-value]+b{display:none}
 .conum[data-value]::after{content:attr(data-value)}
@@ -416,6 +417,7 @@ thead{display:table-header-group}
 svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
 #toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
 body.book #header{text-align:center}
@@ -533,16 +535,25 @@ pre.pygments .tok-il { color: #40a070 } /* Literal.Number.Integer.Long */</style
 <a href="#_get_repository">1.2. Get repository</a>
 </li>
 <li>
-<a href="#_configuration">1.3. Configuration</a>
+<a href="#_configuration_and_customisation_with_environment_variables">1.3. Configuration and Customisation with Environment Variables</a>
 </li>
 <li>
-<a href="#_configure_an_admin_user">1.4. Configure an admin user</a>
+<a href="#_configuration">1.4. Configuration</a>
 </li>
 <li>
-<a href="#_up_and_running">1.5. Up and running</a>
+<a href="#_customisation">1.5. Customisation</a>
 </li>
 <li>
-<a href="#_configure_the_proxy">1.6. Configure the proxy</a>
+<a href="#_advanced_configuration_and_customisation">1.6. Advanced configuration and customisation</a>
+</li>
+<li>
+<a href="#_configure_an_admin_user">1.7. Configure an admin user</a>
+</li>
+<li>
+<a href="#_up_and_running">1.8. Up and running</a>
+</li>
+<li>
+<a href="#_configure_the_proxy">1.9. Configure the proxy</a>
 </li>
 </ul>
 </div>
@@ -586,7 +597,10 @@ pre.pygments .tok-il { color: #40a070 } /* Literal.Number.Integer.Long */</style
 <a href="#start-and-expose">2.11. Start and Expose Taiga</a>
 </li>
 <li>
-<a href="#troubleshooting">2.12. Troubleshooting</a>
+<a href="#extend-taiga">2.12. Extend Taiga</a>
+</li>
+<li>
+<a href="#troubleshooting">2.13. Troubleshooting</a>
 </li>
 </ul>
 </div>
@@ -637,259 +651,336 @@ This document explains how to deploy a full Taiga service for a production envir
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuration">1.3. Configuration</h3>
-<div class="paragraph">
-<p>There are two options to configure taiga-docker, a simple and an advanced configuration:</p>
-</div>
-<div class="sect3">
-<h4 id="_simple_configuration">1.3.1. Simple configuration:</h4>
+<h3 id="_configuration_and_customisation_with_environment_variables">1.3. Configuration and Customisation with Environment Variables</h3>
 <div class="paragraph">
 <p>This configuration is likely to suit what you need. Edit environment variables in <code>docker-compose.yml</code> and <code>docker-compose-inits.yml</code>. Have in mind that some of the variables are in both files, and you need to edit both.</p>
 </div>
 <div class="paragraph">
-<p>When it&#8217;s relevant, you&#8217;ll find the configuration split into <code>configuration</code> and <code>customisation</code> sections. In <code>configuration</code> there are the mandatory environment variables that you should take special care as they come with default values. In <code>customisation</code> there are the optional modules and configurations, which will be typically disabled by default and it&#8217;s up to you enable and configure them.</p>
+<p><strong>Configuration</strong> variables are in <code>docker-compose.yml</code> with default values that we strongly recommend that you change. Those variables are needed to run Taiga. Apart from this configuration, you can have some <strong>customisation</strong> in Taiga, that add features that are disabled by default. Find those variables in <strong>Customisation</strong> section and add the corresponding environment variables whenever you want to enable them.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration">1.4. Configuration</h3>
+<div class="paragraph">
+<div class="title">Database configuration</div>
+<p>These vars will be used to create the database for Taiga and connect to it.</p>
 </div>
 <div class="paragraph">
-<div class="title">taiga-db</div>
-<p>This service is for configuring the database.</p>
+<p><strong>Important</strong>: these vars should have the same values in <code>taiga-back</code> and <code>taiga-db</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>POSTGRES_DB</code>, <code>POSTGRES_USER</code>, <code>POSTGRES_PASSWORD</code> vars will be used to create the database for Taiga.</p>
+<p><strong>Service: taiga-db</strong></p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<div class="title"></div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>These vars should have the same values as <code>taiga-back</code> vars.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>POSTGRES_DB: taiga&#x000A;POSTGRES_USER: taiga&#x000A;POSTGRES_PASSWORD: taiga</code></pre>
 </div>
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
-<div class="title">taiga-back and taiga-async</div>
-<p>These services are for the REST API endpoints and the async tasks respectively.</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>POSTGRES_DB: taiga&#x000A;POSTGRES_USER: taiga&#x000A;POSTGRES_PASSWORD: taiga</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Database settings:</p>
+<div class="title">Taiga Settings</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>TAIGA_SECRET_KEY: taiga-back-secret-key&#x000A;TAIGA_SITES_SCHEME: http&#x000A;TAIGA_SITES_DOMAIN: localhost:9000</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>POSTGRES_DB</code>, <code>POSTGRES_USER</code>, <code>POSTGRES_PASSWORD</code> will be used to connect to the Taiga database.</p>
+<p><strong>Service: taiga-events</strong></p>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<div class="title"></div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>These vars should have the same values as <code>taiga-db</code> service vars.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>TAIGA_SECRET_KEY: taiga-back-secret-key</code></pre>
 </div>
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
-<p><code>POSTGRES_HOST</code> is where the database is set. By default, it&#8217;s meant to be in the same host as the database service so it uses internal docker names.</p>
+<p><strong>Service: taiga-protected</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>TAIGA_SECRET_KEY: taiga-back-secret-key</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Taiga settings:</p>
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>TAIGA_URL: <span class="tok-s2">&quot;http://localhost:9000&quot;</span>&#x000A;TAIGA_WEBSOCKETS_URL: <span class="tok-s2">&quot;ws://localhost:9000&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>TAIGA_SECRET_KEY</code> is the secret key of Taiga. Should be the same as this var in <code>taiga-events</code> and <code>taiga-async</code>.
-Besides, this should have the same value of <code>SECRET_KEY</code> in <code>taiga-protected</code>.</p>
+<p><code>TAIGA_SECRET_KEY</code> is the secret key of Taiga. Should be the same as this var in <code>taiga-back</code>, <code>taiga-events</code> and <code>taiga-protected</code>.
+<code>TAIGA_URL</code> is where this Taiga instance should be served. It should be the same as <code>TAIGA_SITES_SCHEME</code>://<code>TAIGA_SITES_DOMAIN</code>.
+<code>TAIGA_WEBSOCKETS_URL</code> is used to connect to the events. This should have the same value as <code>TAIGA_SITES_DOMAIN</code>, ie: ws://taiga.mycompany.com.</p>
 </div>
 <div class="paragraph">
-<p><code>TAIGA_SITES_SCHEME</code>, <code>TAIGA_SITES_DOMAIN</code> should have the url where this is served: https[://]taiga.mycompany.com</p>
+<div class="title">Session Settings</div>
+<p>Taiga doesn&#8217;t use session cookies in its API as it stateless. However, the Django Admin (<code>/admin/</code>) uses session cookie for authentication. By default, Taiga is configured to work behind HTTPS. If you&#8217;re using HTTP (despite de strong recommendations against it), you&#8217;ll need to configure the following environment variables so you can access the Admin:</p>
 </div>
 <div class="paragraph">
-<p>Session Settings:</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>SESSION_COOKIE_SECURE: <span class="tok-s2">&quot;False&quot;</span>&#x000A;CSRF_COOKIE_SECURE: <span class="tok-s2">&quot;False&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>You can add <code>SESSION_COOKIE_SECURE</code> and <code>CSRF_COOKIE_SECURE</code> to x-environment and change its value. By default is "True", so some browsers only accept https connections.
-More info about this environment variables <a href="https://docs.djangoproject.com/en/3.1/ref/settings/#csrf-cookie-secure">here</a>.</p>
+<p>More info about those variables can be found [here](<a class="bare" href="https://docs.djangoproject.com/en/3.1/ref/settings/#csrf-cookie-secure">https://docs.djangoproject.com/en/3.1/ref/settings/#csrf-cookie-secure</a>).</p>
 </div>
 <div class="paragraph">
-<p>Registration Settings:</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>SESSION_COOKIE_SECURE: <span class="tok-s2">&quot;False&quot;</span>&#x000A;CSRF_COOKIE_SECURE: <span class="tok-s2">&quot;False&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>PUBLIC_REGISTER_ENABLED</code> to allow a public register when you configure this variable to "True". By default is "False".
-Should be the same as this var in <code>taiga-front</code>.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<div class="title"></div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Taiga (in its default configuration) disables both Gitlab or Github oauth buttons whenever the public registration option hasn&#8217;t been activated. To be able to use Github/Gitlab login/registration, make sure you have public registration activated on your Taiga instance.</p>
-</div>
-</td>
-</tr>
-</table>
+<div class="title">Email Settings</div>
+<p>By default, email is configured with the <strong>console</strong> backend, which means that the emails will be shown in the stdout. If you have an smtp service, uncomment the "Email settings" section in <code>docker-compose.yml</code> and configure those environment variables:</p>
 </div>
 <div class="paragraph">
-<p>Telemetry Settings:</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>EMAIL_BACKEND: <span class="tok-s2">&quot;django.core.mail.backends.smtp.EmailBackend&quot;</span>&#x000A;DEFAULT_FROM_EMAIL: <span class="tok-s2">&quot;no-reply@example.com&quot;</span>&#x000A;EMAIL_HOST: <span class="tok-s2">&quot;smtp.host.example.com&quot;</span>&#x000A;EMAIL_PORT: <span class="tok-m">587</span>&#x000A;EMAIL_HOST_USER: <span class="tok-s2">&quot;user&quot;</span>&#x000A;EMAIL_HOST_PASSWORD: <span class="tok-s2">&quot;password&quot;</span>&#x000A;EMAIL_USE_TLS: <span class="tok-s2">&quot;True&quot;</span>&#x000A;EMAIL_USE_SSL: <span class="tok-s2">&quot;True&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Telemetry anonymous data is collected in order to learn about the use of Taiga and improve the platform based on real scenarios.
-<code>ENABLE_TELEMETRY</code> could be opt out by setting this variable to "False". By default is "True".</p>
+<p>Uncomment <code>EMAIL_BACKEND</code> variable, but do not modify unless you know what you&#8217;re doing.</p>
 </div>
 <div class="paragraph">
-<p>Email Settings:</p>
+<div class="title">Telemetry Settings</div>
+<p>Telemetry anonymous data is collected in order to learn about the use of Taiga and improve the platform based on real scenarios.</p>
 </div>
 <div class="paragraph">
-<p>By default, email is configured with the <strong>console</strong> backend, which means that the emails will be shown in the stdout.
-If you have an smtp service, uncomment the "Email settings" section in <code>docker-compose.yml</code> and configure those environment variables:</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_TELEMETRY: <span class="tok-s2">&quot;True&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>DEFAULT_FROM_EMAIL</code>, <code>EMAIL_HOST</code>, <code>EMAIL_PORT</code>, <code>EMAIL_HOST_USER</code>, <code>EMAIL_HOST_PASSWORD</code>, <code>EMAIL_USE_TLS</code>, <code>EMAIL_USE_SSL</code>.
-Uncomment <code>EMAIL_BACKEND</code> variable, but do not modify unless you know what you&#8217;re doing.</p>
+<p>You can opt out by setting this variable to "False". By default is "True".</p>
 </div>
 <div class="paragraph">
-<p>Rabbit settings:</p>
+<div class="title">Rabbit settings</div>
+<p>These variables are used to leave messages in the rabbitmq services. These variables should be the same as in <code>taiga-back</code>, <code>taiga-async</code>, <code>taiga-events</code>, <code>taiga-async-rabbitmq</code> and <code>taiga-events-rabbitmq</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>RABBITMQ_USER</code>, <code>RABBITMQ_PASS</code> are used to leave messages in the rabbitmq services. Those variables should be the same as in <code>taiga-async-rabbitmq</code> and <code>taiga-events-rabbitmq</code>.</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>RABBITMQ_USER: taiga&#x000A;RABBITMQ_PASS: taiga</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Github settings:</p>
+<p>Two other variables <code>EVENTS_PUSH_BACKEND_URL</code> and <code>CELERY_BROKER_URL</code> can also be used to set the events push backend URL and celery broker URL.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>EVENTS_PUSH_BACKEND_URL: <span class="tok-s2">&quot;amqp://taiga:taiga@taiga-events-rabbitmq:5672/taiga&quot;</span>&#x000A;CELERY_BROKER_URL: <span class="tok-s2">&quot;amqp://taiga:taiga@taiga-async-rabbitmq:5672/taiga&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>ENABLE_GITHUB_AUTH</code>, <code>GITHUB_API_CLIENT_ID</code>, <code>GITHUB_API_CLIENT_SECRET</code> used for login with Github.
+<p><strong>Service: taiga-events</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>RABBITMQ_USER: taiga&#x000A;RABBITMQ_PASS: taiga</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Service: taiga-async-rabbitmq</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>RABBITMQ_ERLANG_COOKIE: secret-erlang-cookie&#x000A;RABBITMQ_DEFAULT_USER: taiga&#x000A;RABBITMQ_DEFAULT_PASS: taiga&#x000A;RABBITMQ_DEFAULT_VHOST: taiga</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Service: taiga-events-rabbitmq</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>RABBITMQ_ERLANG_COOKIE: secret-erlang-cookie&#x000A;RABBITMQ_DEFAULT_USER: taiga&#x000A;RABBITMQ_DEFAULT_PASS: taiga&#x000A;RABBITMQ_DEFAULT_VHOST: taiga</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Taiga protected settings</div>
+<p><strong>Service: taiga-protected</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>MAX_AGE: <span class="tok-m">360</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The attachments will be accesible with a token during MAX_AGE (in seconds). After that, the token will expire.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_customisation">1.5. Customisation</h3>
+<div class="paragraph">
+<p>All these features are disabled by default. You should add the corresponding environment variables with a proper value to enable them.</p>
+</div>
+<div class="paragraph">
+<div class="title">Registration Settings</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>PUBLIC_REGISTER_ENABLED: <span class="tok-s2">&quot;True&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>PUBLIC_REGISTER_ENABLED: <span class="tok-s2">&quot;true&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want to allow a public register, configure this variable to "True". By default is "False". Should be the same as this var in <code>taiga-front</code> and <code>taiga-back</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Important</strong>: Taiga (in its default configuration) disables both Gitlab or Github oauth buttons whenever the public registration option hasn&#8217;t been activated. To be able to use Github/ Gitlab login/registration, make sure you have public registration activated on your Taiga instance.</p>
+</div>
+<div class="paragraph">
+<div class="title">Github settings</div>
+<p>Used for login with Github.
 Get these in your profile <a class="bare" href="https://github.com/settings/apps">https://github.com/settings/apps</a> or in your organization profile <a class="bare" href="https://github.com/organizations/{ORGANIZATION-SLUG}/settings/applications">https://github.com/organizations/{ORGANIZATION-SLUG}/settings/applications</a></p>
 </div>
 <div class="paragraph">
-<p>Gitlab settings:</p>
+<p><strong>Note</strong> <code>ENABLE_GITHUB_AUTH</code> and <code>GITHUB_CLIENT_ID</code> should have the same value in <code>taiga-back</code> and <code>taiga-front</code> services.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITHUB_AUTH: <span class="tok-s2">&quot;True&quot;</span>&#x000A;GITHUB_API_CLIENT_ID: <span class="tok-s2">&quot;github-api-client-id&quot;</span>&#x000A;GITHUB_API_CLIENT_SECRET: <span class="tok-s2">&quot;github-api-client-secret&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>ENABLE_GITLAB_AUTH</code>, <code>GITLAB_API_CLIENT_ID</code>, <code>GITLAB_API_CLIENT_SECRET</code>, <code>GITLAB_URL</code> used for login with GitLab.
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITHUB_AUTH: <span class="tok-s2">&quot;true&quot;</span>&#x000A;GITHUB_API_CLIENT_ID: <span class="tok-s2">&quot;github-api-client-id&quot;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Gitlab settings</div>
+<p>Used for login with GitLab.
 Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/applications">https://{YOUR-GITLAB}/profile/applications</a> or in your organization profile <a class="bare" href="https://{YOUR-GITLAB}/admin/applications">https://{YOUR-GITLAB}/admin/applications</a></p>
 </div>
 <div class="paragraph">
-<p>Slack:</p>
+<p><strong>Note</strong> <code>ENABLE_GITLAB_AUTH</code>, <code>GITLAB_CLIENT_ID</code> and <code>GITLAB_URL</code> should have the same value in <code>taiga-back</code> and <code>taiga-front</code> services.</p>
 </div>
 <div class="paragraph">
-<p>Set <code>ENABLE_SLACK</code> to "True" to enjoy the integration with Slack.</p>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITLAB_AUTH: <span class="tok-s2">&quot;True&quot;</span>&#x000A;GITLAB_API_CLIENT_ID: <span class="tok-s2">&quot;gitlab-api-client-id&quot;</span>&#x000A;GITLAB_API_CLIENT_SECRET: <span class="tok-s2">&quot;gitlab-api-client-secret&quot;</span>&#x000A;GITLAB_URL: <span class="tok-s2">&quot;gitlab-url&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Importers:</p>
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITLAB_AUTH: <span class="tok-s2">&quot;true&quot;</span>&#x000A;GITLAB_CLIENT_ID: <span class="tok-s2">&quot;gitlab-client-id&quot;</span>&#x000A;GITLAB_URL: <span class="tok-s2">&quot;gitlab-url&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>It&#8217;s possible to configure different platforms to import projects from them. Make sure that <code>ENABLE_XXXX_IMPORTER</code> envvar is configured in both taiga-back (x-environment) and taiga-front. In taiga-back environment variables, it&#8217;s also necessary to configure different settings depending on the importer.</p>
+<div class="title">Slack Settings</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_SLACK: <span class="tok-s2">&quot;True&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<div class="title">taiga-async-rabbitmq</div>
-<p>Configure this service to generate messages from <code>rabbitmq</code> for <code>taiga-async</code>.</p>
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_SLACK: <span class="tok-s2">&quot;true&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>RABBITMQ_ERLANG_COOKIE</code> is the secret erlang cookie.</p>
+<p>Enable Slack integration in your Taiga instance. By default is "False". Should have the same value as this variable in <code>taiga-front</code> and <code>taiga-back</code>.</p>
 </div>
 <div class="paragraph">
-<p><code>RABBITMQ_DEFAULT_USER</code>, <code>RABBITMQ_DEFAULT_PASS</code>, <code>RABBITMQ_DEFAULT_VHOST</code> will be used to connect to rabbitmq.</p>
+<div class="title">Github importer</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITHUB_IMPORTER: <span class="tok-s2">&quot;True&quot;</span>&#x000A;GITHUB_IMPORTER_CLIENT_ID: <span class="tok-s2">&quot;client-id-from-github&quot;</span>&#x000A;GITHUB_IMPORTER_CLIENT_SECRET: <span class="tok-s2">&quot;client-secret-from-github&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<div class="title">taiga-front</div>
-<p>This service is for configuring the frontend application.</p>
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_GITHUB_IMPORTER: <span class="tok-s2">&quot;true&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Taiga settings:</p>
+<div class="title">Jira importer</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_JIRA_IMPORTER: <span class="tok-s2">&quot;True&quot;</span>&#x000A;JIRA_IMPORTER_CONSUMER_KEY: <span class="tok-s2">&quot;consumer-key-from-jira&quot;</span>&#x000A;JIRA_IMPORTER_CERT: <span class="tok-s2">&quot;cert-from-jira&quot;</span>&#x000A;JIRA_IMPORTER_PUB_CERT: <span class="tok-s2">&quot;pub-cert-from-jira&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>TAIGA_URL</code> is where this Taiga instance should be served. It should be the same as <code>TAIGA_SITES_SCHEME</code>://<code>TAIGA_SITES_DOMAIN</code>.</p>
+<p><strong>Service: taiga-front</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_JIRA_IMPORTER: <span class="tok-s2">&quot;true&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><code>TAIGA_WEBSOCKETS_URL</code> to connect to the events. This should have the same value as <code>TAIGA_SITES_DOMAIN</code>, ie: ws://taiga.mycompany.com</p>
+<div class="title">Trello importer</div>
+<p><strong>Service: taiga-back</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_TRELLO_IMPORTER: <span class="tok-s2">&quot;True&quot;</span>&#x000A;TRELLO_IMPORTER_API_KEY: <span class="tok-s2">&quot;api-key-from-trello&quot;</span>&#x000A;TRELLO_IMPORTER_SECRET_KEY: <span class="tok-s2">&quot;secret-key-from-trello&quot;</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Registration Settings:</p>
+<p><strong>Service: taiga-front</strong></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>ENABLE_TRELLO_IMPORTER: <span class="tok-s2">&quot;true&quot;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advanced_configuration_and_customisation">1.6. Advanced configuration and customisation</h3>
 <div class="paragraph">
-<p><code>PUBLIC_REGISTER_ENABLED</code> to allow a public register, configure this variable to "true". By default is "false".
-Should be the same as this var in <code>taiga-back</code>.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<div class="title"></div>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Taiga (in its default configuration) disables both Gitlab or Github oauth buttons whenever the public registration option hasn&#8217;t been activated. To be able to use Github/Gitlab login/registration, make sure you have public registration activated on your Taiga instance.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Github settings:</p>
-</div>
-<div class="paragraph">
-<p><code>ENABLE_GITHUB_AUTH</code>, <code>GITHUB_CLIENT_ID</code> used for login with Github.
-Get these in your profile <a class="bare" href="https://github.com/settings/apps">https://github.com/settings/apps</a> or in your organization profile <a class="bare" href="https://github.com/organizations/{ORGANIZATION-SLUG}/settings/applications">https://github.com/organizations/{ORGANIZATION-SLUG}/settings/applications</a></p>
-</div>
-<div class="paragraph">
-<p>Gitlab settings:</p>
-</div>
-<div class="paragraph">
-<p><code>ENABLE_GITLAB_AUTH</code>, <code>GITLAB_CLIENT_ID</code>, <code>GITLAB_URL</code> used for login with GitLab.
-Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/applications">https://{YOUR-GITLAB}/profile/applications</a> or in your organization profile <a class="bare" href="https://{YOUR-GITLAB}/admin/applications">https://{YOUR-GITLAB}/admin/applications</a></p>
-</div>
-<div class="paragraph">
-<p>Importers:</p>
-</div>
-<div class="paragraph">
-<p>It&#8217;s possible to configure different platforms to import projects from them. Make sure that <code>ENABLE_XXXX_IMPORTER</code> envvar is configured in both taiga-back (x-environment) and taiga-front.</p>
-</div>
-<div class="paragraph">
-<p>Slack:</p>
-</div>
-<div class="paragraph">
-<p>Set <code>ENABLE_SLACK</code> to "true" to enjoy the integration with Slack.</p>
-</div>
-<div class="paragraph">
-<div class="title">taiga-protected</div>
-<p>Configure this service and protects the attachments from external downloads.</p>
-</div>
-<div class="paragraph">
-<p><code>SECRET_KEY</code> should be the same as this var in <code>taiga-back</code>.</p>
-</div>
-<div class="paragraph">
-<p><code>MAX_AGE</code> variable does that the attachments will be accessible with a token during a maximum (in seconds). After that, the token will expire.</p>
-</div>
-<div class="paragraph">
-<div class="title">taiga-events</div>
-<p>Configure this service for Taiga websocket server which allows taiga-front to show realtime changes in the backlog, taskboard, kanban and issues listing.</p>
-</div>
-<div class="paragraph">
-<p><code>RABBITMQ_USER</code>, <code>RABBITMQ_PASS</code> are used to read messages from rabbitmq.</p>
-</div>
-<div class="paragraph">
-<p><code>TAIGA_SECRET_KEY</code> should be the same as this var in <code>taiga-back</code>.</p>
-</div>
-<div class="paragraph">
-<div class="title">taiga-events-rabbitmq</div>
-<p>Configure this service to generate messages from <code>rabbitmq</code> for <code>taiga-events</code>.</p>
-</div>
-<div class="paragraph">
-<p><code>RABBITMQ_ERLANG_COOKIE</code> is the secret erlang cookie.</p>
-</div>
-<div class="paragraph">
-<p><code>RABBITMQ_DEFAULT_USER</code>, <code>RABBITMQ_DEFAULT_PASS</code>, <code>RABBITMQ_DEFAULT_VHOST</code> vars will be used to connect to rabbitmq.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_advanced_configuration">1.3.2. Advanced configuration:</h4>
-<div class="paragraph">
-<p>In a complex configuration you ignore the environment variables in <code>docker-compose.yml</code> or <code>docker-compose-inits.yml</code>.</p>
+<p>In an advanced configuration, you ignore the environment variables in <code>docker-compose.yml</code> or <code>docker-compose-inits.yml</code>.</p>
 </div>
 <div class="paragraph">
 <div class="title">Map a <code>config.py</code> file</div>
@@ -917,9 +1008,6 @@ Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/ap
 <li>
 <p>Enable/disable anonymous telemetry</p>
 </li>
-<li>
-<p>Enable/disable public registration</p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -941,9 +1029,8 @@ Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/ap
 <p>Edit it with your own configuration and map the file into <code>/taiga-front/dist/config.py</code>.</p>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_configure_an_admin_user">1.4. Configure an admin user</h3>
+<h3 id="_configure_an_admin_user">1.7. Configure an admin user</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="sh"><span></span>$ docker-compose up -d&#x000A;&#x000A;$ docker-compose -f docker-compose.yml -f docker-compose-inits.yml run --rm taiga-manage createsuperuser</code></pre>
@@ -951,7 +1038,7 @@ Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/ap
 </div>
 </div>
 <div class="sect2">
-<h3 id="_up_and_running">1.5. Up and running</h3>
+<h3 id="_up_and_running">1.8. Up and running</h3>
 <div class="paragraph">
 <p>Once everything has been installed, launch all the services and check the result:</p>
 </div>
@@ -965,7 +1052,7 @@ Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/ap
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configure_the_proxy">1.6. Configure the proxy</h3>
+<h3 id="_configure_the_proxy">1.9. Configure the proxy</h3>
 <div class="paragraph">
 <p>Your host configuration needs to make a proxy to <code><a class="bare" href="http://localhost:9000">http://localhost:9000</a></code>. Example:</p>
 </div>
@@ -1123,7 +1210,7 @@ Get these in your profile <a class="bare" href="https://{YOUR-GITLAB}/profile/ap
 <div class="title"></div>
 </td>
 <td class="content">
-Do <strong>not</strong> change to the root user (<code>uid=0</code>) at this point. Taiga deployment must be finished with the <code>taiga</code> user!
+Do <strong>not</strong> change back to the root user (<code>uid=0</code>) at this point. Taiga deployment must be finished with the <code>taiga</code> user!
 </td>
 </tr>
 </table>
@@ -1138,9 +1225,9 @@ Do <strong>not</strong> change to the root user (<code>uid=0</code>) at this poi
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Create a user named <code>taiga</code>, and a virtualhost for RabbitMQ (taiga-events and async tasks)</div>
+<div class="title">Create a rabbitmquser named <code>taiga</code> and a virtualhost for RabbitMQ (taiga-events and async tasks)</div>
 <div class="content">
-<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo rabbitmqctl add_user taiga PASSWORD_FOR_EVENTS&#x000A;sudo rabbitmqctl add_vhost taiga&#x000A;sudo rabbitmqctl set_permissions -p taiga taiga <span class="tok-s2">&quot;.*&quot;</span> <span class="tok-s2">&quot;.*&quot;</span> <span class="tok-s2">&quot;.*&quot;</span></code></pre>
+<pre class="pygments highlight"><code data-lang="bash"><span></span>sudo rabbitmqctl add_user rabbitmquser rabbitmqpassword&#x000A;sudo rabbitmqctl add_vhost taiga&#x000A;sudo rabbitmqctl set_permissions -p rabbitmquser taiga <span class="tok-s2">&quot;.*&quot;</span> <span class="tok-s2">&quot;.*&quot;</span> <span class="tok-s2">&quot;.*&quot;</span></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1308,7 +1395,7 @@ Stop the developtment server (Ctrl+C) before continuing.</p>
 <div class="listingblock">
 <div class="title">Update it with your RabbitMQ URL and your unique secret key. Your final <code>.env</code> should look similar to the following example:</div>
 <div class="content">
-<pre class="pygments highlight"><code><span></span>RABBITMQ_URL=&quot;amqp://rabbitmquser:rabbitmqpassword@rabbitmqhost:5672/taiga&quot;&#x000A;SECRET=&quot;mysecret&quot;&#x000A;WEB_SOCKET_SERVER_PORT=8888&#x000A;APP_PORT=3023</code></pre>
+<pre class="pygments highlight"><code><span></span>RABBITMQ_URL=&quot;amqp://rabbitmquser:rabbitmqpassword@rabbitmqhost:5672/taiga&quot;&#x000A;SECRET=&quot;taiga-back-secret-key&quot;&#x000A;WEB_SOCKET_SERVER_PORT=8888&#x000A;APP_PORT=3023</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1476,7 +1563,13 @@ Stop the developtment server (Ctrl+C) before continuing.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="troubleshooting">2.12. Troubleshooting</h3>
+<h3 id="extend-taiga">2.12. Extend Taiga</h3>
+<div class="paragraph">
+<p>With this installation, you have access to a fair amount of features of Taiga. However, you may want to extend it with other functionalities or plugins, such Slack integration or login with Github. To extend Taiga, check all the available options at <a class="bare" href="https://resources.taiga.io/extend/how-to-extend-taiga/">https://resources.taiga.io/extend/how-to-extend-taiga/</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="troubleshooting">2.13. Troubleshooting</h3>
 <div class="ulist">
 <div class="title">If you face any issue during or after installing Taiga, please check the content of the following files:</div>
 <ul>
@@ -1527,7 +1620,7 @@ Stop the developtment server (Ctrl+C) before continuing.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-15 15:34:36 +0100
+Last updated 2021-02-19 13:44:51 +0100
 </div>
 </div>
 </div>
